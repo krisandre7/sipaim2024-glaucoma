@@ -166,6 +166,13 @@ cython_debug/
 /tmp.pt
 
 data/*
+!data/JustRAIGS/cropped/.gitkeep
+!data/JustRAIGS/uncropped/.gitkeep
+data/JustRAIGS/cropped/*.JPG
+data/JustRAIGS/cropped/*.jpg
+data/JustRAIGS/uncropped/*.JPG
+data/JustRAIGS/uncropped/*.jpg
+
 wandb
 *.jpg
 crops*
