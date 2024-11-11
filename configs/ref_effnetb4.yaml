@@ -1,0 +1,128 @@
+datamodule:
+  name: justraigs
+  args:
+    data_dir: data/JustRAIGS
+    negative_resample_step: 1
+    dataset: justraigs
+    task: binary
+    batch_size: 70
+    test_split: 0.2
+    val_split: 0.18
+    # val_samples: 5000
+    use_cropped: True
+    num_workers: 10
+
+trainer:
+  args:
+    max_epochs: 1000
+    log_step: 20
+    save_metric: sens_at_spec
+    gpu_num: 0
+
+criterion: bce_logits_loss
+  # name: class_balanced
+  # args:
+  #   samples_per_class: [98099,  3269]
+  #   loss: 'sigmoid'
+
+optimizer: 
+  name: adam
+  args:
+    lr: 0.001
+
+# resume_path: model_zoo/tf_efficientnet_b4_sens_at_spec_0.9375_ref.pt
+model:
+  name: referral
+  args:
+    model_name: tf_efficientnet_b4
+    pretrained: True
+    num_classes: 1
+    num_channels: 3
+    features_only: False
+    # global_pool: catavgmax
+    scriptable: True
+    exportable: True
+    custom_head: True
+
+transforms:
+  - name: Equalize
+    args:
+      by_channels: False
+  - name: ShiftScaleRotate
+    args:
+      shift_limit: 0.1
+      scale_limit: 0
+      rotate_limit: 4
+      interpolation: 2
+      p: 0.2
+  - name: RandomCropFromBorders
+    args:
+      crop_left: 0.2
+      crop_right: 0.2
+      crop_top: 0.2
+      crop_bottom: 0.2
+      p: 0.2
+  - name: RGBShift
+    args:
+      r_shift_limit: 2
+      g_shift_limit: 2
+      b_shift_limit: 2
+      p: 0.2
+  - name: RandomBrightnessContrast
+    args:
+      brightness_limit: 0.2
+      contrast_limit: 0.2
+      p: 0.2
+  - name: GaussNoise
+    args:
+      p: 0.2
+  - name: Defocus
+    args:
+      p: 0.2
+  - name: HorizontalFlip
+    args:
+      p: 0.2
+  - name: Resize
+    args:
+      height: 380
+      width: 380
+      interpolation: 2
+  - name: Normalize
+    args:
+      mean: [0.485, 0.456, 0.406]
+      std: [0.229, 0.224, 0.225]
+
+scheduler:
+  name: reduce_on_plateau
+  args:
+    patience: 10
+
+monitor:
+  project: raigs-glaucoma
+  resume: 'allow'
+  mode: 'online'
+  # dir: /mnt/JustRAIGS
+  # mode: 'offline'
+  # Optional arguments.
+  # entity: kris
+  # job_name: experiment
+
+metrics:
+  train:
+    - f1_score
+    # - hamming_distance
+    - sens_at_spec:
+        min_specificity: 0.95
+    - specificity
+    - recall
+    - precision
+  val:
+    - f1_score
+    - sens_at_spec:
+        min_specificity: 0.95
+    - specificity
+    - recall
+    - conf_matrix
+    - precision
+
+seed: 42

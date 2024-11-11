@@ -1,0 +1,1 @@
+from src.infra.monitor.monitor import WandbExperimentMonitor
