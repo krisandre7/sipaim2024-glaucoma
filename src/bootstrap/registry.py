@@ -7,7 +7,6 @@ from src.datamodules.justraigs import JustRAIGSDataModule
 from src.models import (ReferralModel, JustificationModel, JustExtractionModel)
 from src.datamodules.datasets import JustRAIGSDataset
 from torch.utils.data import Dataset
-from src.datamodules import MNISTDataModule
 from torchmetrics import Accuracy, ConfusionMatrix, HammingDistance, F1Score, Specificity, Recall, Precision
 
 from src.metrics import SensitivityAtSpecificity

@@ -33,32 +33,32 @@ To crop the images, run the following command:
 ```bash
 python crop.py
 ```
-The script utilizes a pretrained optic disc segmentation model called M-Net, developed by H. Fu et al. [1-2]. The code was adapated from the [MNet_DeepCDR](https://github.com/HzFu/MNet_DeepCDR) repository.
+The script utilizes a pretrained optic disc segmentation model, developed by H. Fu et al. [1-2], to crop the optic disc region from the original fundus images. The code was adapted from the [MNet_DeepCDR](https://github.com/HzFu/MNet_DeepCDR) repository.
 
 Before running the script, download the pretrained weights from [here](https://github.com/HzFu/MNet_DeepCDR/blob/e094023d5390ffc1606aba682e48eacf272fdba9/mnet_deep_cdr/deep_model/Model_DiscSeg_ORIGA.h5), convert the tensorflow weight to the onnx format using the [this tool](https://onnxruntime.ai/docs/tutorials/tf-get-started.html) and place the resulting  `Model_DiscSeg_ORIGA.onnx`file in the directory: `src/models/segmentation/model_files/`.
 
 # Training
 To train the model, run the following command:
 ```bash
-python train.py --config configs/config.yaml
+python train_model.py configs/config.yaml
 ```
 where `config.yaml` is one of the configuration files in the `configs` directory. The training script uses [WandB](https://wandb.ai/) to save the training logs and checkpoints in the `wandb` directory. 
 
 If you wish to quickly test if the code is working, you can use the `--dry-run` flag to train the model for a single iteration:
 ```bash
-python train.py --config configs/config.yaml --dry-run
+python train_model.py configs/config.yaml --dry-run
 ```
 
 # Evaluation
 To evaluate the model, run the following command:
 ```bash
-python test_model.py --config configs/config.yaml --checkpoint path/to/checkpoint.pth
+python test_model.py model.pt --data_dir data/JustRAIGS -bs 8
 ```
 where `path/to/checkpoint.pth` is the path to the checkpoint file. The script will use the config file inside the checkpoint to load the model and evaluate it on the test set, using the metrics specified in the config file.
 
 Additionaly, you can use the `--grad-cam` flag to generate Grad-CAM visualizations for the model predictions:
 ```bash
-python test_model.py --config configs/config.yaml --checkpoint path/to/checkpoint.pth --grad-cam
+python test_model.py model.pt --data_dir data/JustRAIGS -bs 8 --grad-cam
 ``` 
 The Grad-CAM visualizations will be saved in the `cam_images` directory.
 

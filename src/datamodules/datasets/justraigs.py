@@ -7,7 +7,6 @@ import pandas as pd
 from PIL import Image
 import os
 from src.enums import Task
-from src.utils import compare_images
 from torchvision.transforms import v2
 import numpy as np
 from sklearn.experimental import enable_iterative_imputer
