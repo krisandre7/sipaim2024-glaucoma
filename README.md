@@ -52,13 +52,13 @@ python train.py --config configs/config.yaml --dry-run
 # Evaluation
 To evaluate the model, run the following command:
 ```bash
-python test_model --config configs/config.yaml --checkpoint path/to/checkpoint.pth
+python test_model.py --config configs/config.yaml --checkpoint path/to/checkpoint.pth
 ```
 where `path/to/checkpoint.pth` is the path to the checkpoint file. The script will use the config file inside the checkpoint to load the model and evaluate it on the test set, using the metrics specified in the config file.
 
 Additionaly, you can use the `--grad-cam` flag to generate Grad-CAM visualizations for the model predictions:
 ```bash
-python test_model --config configs/config.yaml --checkpoint path/to/checkpoint.pth --grad-cam
+python test_model.py --config configs/config.yaml --checkpoint path/to/checkpoint.pth --grad-cam
 ``` 
 The Grad-CAM visualizations will be saved in the `cam_images` directory.
 
