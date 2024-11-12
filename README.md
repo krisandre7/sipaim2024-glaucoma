@@ -8,7 +8,7 @@ This repository contains the code for the SIPAIM 2024 paper 'Automatic Glaucoma 
 
 ## Conda environment
 We use [conda](https://conda.io/) to manage the project dependencies. To create the environment, run the following commands:
-```bash
+```bash 
 conda env create -n sipaim python=3.9
 conda activate sipaim
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
