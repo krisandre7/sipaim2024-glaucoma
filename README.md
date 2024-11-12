@@ -17,7 +17,9 @@ pip install albumentations onnxruntime-gpu scikit-image scipy grad-cam protobuf=
 ```
 
 ## Dataset
-The dataset used in this project is the [JustRAIGS Challenge](https://justraigs.grand-challenge.org/). The dataset is publicly available and can be downloaded from [Zenodo](https://zenodo.org/records/10035093). After downloading the dataset, add the uncropped images to the `data` directory as shown below:
+This project utilizes data from the [JustRAIGS Challenge](https://justraigs.grand-challenge.org/), which is openly available to the public. You can download the dataset directly from [Zenodo](https://zenodo.org/records/10035093). 
+
+Once downloaded, please place the uncropped images in the `data` directory following the structure below:
 ```
 data/
     ├── JustRAIGS/
